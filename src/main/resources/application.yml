@@ -1,0 +1,75 @@
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    com.example.order: INFO
+
+server:
+  port: 9091
+spring:
+  application:
+    name: order-analytics
+  cloud:
+    stream:
+      function:
+        definition: orderSupplier;orderEnricher;orderSegregator;smallOrderSink;mediumOrderSink;largeOrderSink
+      poller:
+        fixed-delay: 2000
+      bindings:
+        orderSupplier-out-0:
+          destination: orders
+        orderEnricher-in-0:
+          destination: orders
+        orderEnricher-out-0:
+          destination: enriched-orders
+        orderSegregator-in-0:
+          destination: enriched-orders
+        orderSegregator-out-0:
+          destination: small-orders
+        orderSegregator-out-1:
+          destination: medium-orders
+        orderSegregator-out-2:
+          destination: large-orders
+        smallOrderSink-in-0:
+          destination: small-orders
+        mediumOrderSink-in-0:
+          destination: medium-orders
+        largeOrderSink-in-0:
+          destination: large-orders
+      kafka:
+        streams:
+          binder:
+            brokers:
+              - 18.235.93.139:9092
+              - 3.210.137.206:9092
+              - 34.230.163.219:9092
+            functions:
+              orderEnricher:
+                applicationId: analytics-order-enricher
+              orderSegregator:
+                applicationId: analytics-order-orderSegregator
+              smallOrderSink:
+                applicationId: analytics-small-order-sink
+              mediumOrderSink:
+                applicationId: analytics-medium-order-sink
+              largeOrderSink:
+                applicationId: analytics-large-order-sink
+            configuration:
+              commit.interval.ms: 100
+              processing.guarantee: exactly_once
+#             default:
+#               key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+#               value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+        binder:
+          brokers:
+            - 18.235.93.139:9092
+            - 3.210.137.206:9092
+            - 34.230.163.219:9092
+          producer-properties:
+            compression.type: snappy
+            acks: all
+            enable.idempotence: true
+            retries: 2147483647
+            linger.ms: 20
+            batch.size: 33024
+
