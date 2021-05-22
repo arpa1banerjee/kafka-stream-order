@@ -40,6 +40,7 @@ spring:
         streams:
           binder:
             brokers:
+#              - localhost:9092
               - 18.235.93.139:9092
               - 3.210.137.206:9092
               - 34.230.163.219:9092
@@ -57,11 +58,13 @@ spring:
             configuration:
               commit.interval.ms: 100
               processing.guarantee: exactly_once
-#             default:
+              replication.factor: 3
+        #             default:
 #               key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
 #               value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
         binder:
           brokers:
+#            - localhost:9092
             - 18.235.93.139:9092
             - 3.210.137.206:9092
             - 34.230.163.219:9092

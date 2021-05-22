@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.streams.KeyValue;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -50,5 +51,15 @@ public class OrderService {
     @SneakyThrows
     public void saveOrders(final Order order, final String fileName) {
         fileWriterService.writeToJsonFile(fileName, objectMapper.writeValueAsString(order).concat(System.lineSeparator()));
+    }
+
+    public KeyValue<String, String> segregateOrderBySize(Order value) {
+        if (value.getLines().size() <= 5) {
+            return new KeyValue<>("smallOrders", "0");
+        } else if (value.getLines().size() > 5 && value.getLines().size() <= 10) {
+            return new KeyValue<>("mediumOrders", "0");
+        } else {
+            return new KeyValue<>("largeOrders", "0");
+        }
     }
 }
