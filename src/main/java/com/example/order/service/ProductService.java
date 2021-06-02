@@ -23,6 +23,7 @@ public class ProductService {
 
 
     public List<String> getAllProductIds() {
+
         return productSupplier.supplyProducts().stream().map(Product::getProductId).collect(Collectors.toList());
     }
     public Product productDetails(final String productId) {
