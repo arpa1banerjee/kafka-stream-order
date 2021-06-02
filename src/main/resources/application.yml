@@ -5,7 +5,7 @@ logging:
     com.example.order: INFO
 
 server:
-  port: 9091
+  port: ${SERVER_PORT}
 spring:
   application:
     name: order-analytics
@@ -40,10 +40,10 @@ spring:
         streams:
           binder:
             brokers:
-#              - localhost:9092
-              - 18.235.93.139:9092
-              - 3.210.137.206:9092
-              - 34.230.163.219:9092
+              - localhost:9092
+#              - 18.235.93.139:9092
+#              - 3.210.137.206:9092
+#              - 34.230.163.219:9092
             functions:
               orderEnricher:
                 applicationId: analytics-order-enricher
@@ -58,16 +58,16 @@ spring:
             configuration:
               commit.interval.ms: 100
               processing.guarantee: exactly_once
-              replication.factor: 3
+              replication.factor: 1
         #             default:
 #               key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
 #               value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
         binder:
           brokers:
-#            - localhost:9092
-            - 18.235.93.139:9092
-            - 3.210.137.206:9092
-            - 34.230.163.219:9092
+            - localhost:9092
+#            - 18.235.93.139:9092
+#            - 3.210.137.206:9092
+#            - 34.230.163.219:9092
           producer-properties:
             compression.type: snappy
             acks: all

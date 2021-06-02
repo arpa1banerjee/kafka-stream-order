@@ -13,15 +13,14 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ProductService {
 
-    ProductSupplier productSupplier = () -> {
-        return Arrays.asList(
+    ProductSupplier productSupplier = () -> Arrays.asList(
                 Product.builder().productId("P1").productName("Coke").build(),
                 Product.builder().productId("P2").productName("Chicken").build(),
                 Product.builder().productId("P3").productName("Milk").build(),
                 Product.builder().productId("P4").productName("Butter").build(),
                 Product.builder().productId("P5").productName("Bread").build()
         );
-    };
+
 
     public List<String> getAllProductIds() {
         return productSupplier.supplyProducts().stream().map(Product::getProductId).collect(Collectors.toList());
