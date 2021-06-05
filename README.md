@@ -5,4 +5,4 @@ Commit Feature 2
 Commit Feature 3
 Commit Feature 4
 Commit Feature 5
-Commit Feature 7
+Commit Feature 7 
