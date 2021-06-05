@@ -5,9 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class OrderAnalyticsApplication {
-	// comment by Varsha
 	public static void main(String[] args) {
 		SpringApplication.run(OrderAnalyticsApplication.class, args);
 	}
-
 }
