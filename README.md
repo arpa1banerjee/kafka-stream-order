@@ -6,3 +6,4 @@ Commit Feature 1
 Commit Feature 2
 Commit Feature 3
 Commit Feature 5
+Commit Feature 4
